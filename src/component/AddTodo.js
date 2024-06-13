@@ -7,15 +7,34 @@ class AddTodo extends Component {
     super();
     this.state = {
       content: "",
+      conditions: "",
+      criteria: "",
+      date: ""
     };
   }
   // The handleChange function updates the react state with the new input value provided from the user.
   // "event" is the defined action a user takes. In this case, the event is triggered when the user types something
   // into the text field.
   handleChange = (event) => {
-    this.setState({
+    if (event.target.name == "content") {
+      this.setState({
       content: event.target.value,
+      date: Date().toLocaleString('en-US')
     });
+    }
+    if (event.target.name == "conditions") {
+      this.setState({
+        conditions: event.target.value,
+        date: Date().toLocaleString('en-US')
+      })
+    }
+    if (event.target.name == "criteria") {
+      this.setState({
+        criteria: event.target.value,
+        date: Date().toLocaleString('en-US')
+      })
+    }
+    
   };
   // The handleSubmit function collects the forms input and puts it into the react state.
   // event.preventDefault() is called to prevents default event behavior like refreshing the browser.
@@ -27,6 +46,9 @@ class AddTodo extends Component {
       this.props.addTodo(this.state);
       this.setState({
         content: "",
+        conditions: "",
+        criteria: "",
+        date: ""
       });
     }
   };
@@ -46,6 +68,21 @@ class AddTodo extends Component {
           onChange={this.handleChange}
           value={this.state.content}
           data-testid="new-item-textfield"
+          name="content"
+        />
+        <TextField 
+          label="Pre-Conditions"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.conditions}
+          name="conditions"
+        />
+        <TextField
+          label="Acceptance Criteria"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.criteria}
+          name="criteria"
         />
         <Button
           style={{ marginLeft: "10px" }}
