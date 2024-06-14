@@ -21,16 +21,27 @@ const Todos = ({ todos, deleteTodo }) => {
               <Checkbox style={{padding:0}} color="primary" onClick={() => {deleteTodo(todo.id)}}></Checkbox>
               <ListItemText  primary={todo.content} secondary={todo.date}/>
             </ListItemButton>
-            {todo.conditions !== "" && (
+            {Array.isArray(todo.conditions) && todo.conditions.length > 0 && (
             <div style={{ padding: '0 16px 16px 16px' }}>
-              <ListItemText 
-                secondary={<React.Fragment>Pre-Conditions: {todo.conditions}</React.Fragment>} />
+              {<React.Fragment>Pre-Conditions: {todo.conditions.map((condition, index) => (
+                  <ListItemButton href="#simple-list">
+                    <Checkbox style={{ padding: 0 }} color="primary" />
+                    <ListItemText secondary={condition} />
+                </ListItemButton>  
+              ))}</React.Fragment>}
             </div>)}
-            {todo.criteria !== "" && (
-            <div style={{ padding: '0 16px 16px 16px'}}>
-              <ListItemText 
-                secondary={<React.Fragment>Acceptance Criteria: {todo.criteria}</React.Fragment>} />
+
+            {Array.isArray(todo.criteria) && todo.criteria.length > 0 && (
+            <div style={{ padding: '0 16px 16px 16px' }}>
+              {<React.Fragment>Acceptance Criteria: {todo.criteria.map((criteria, index) => (
+                  <ListItemButton href="#simple-list">
+                    <Checkbox style={{ padding: 0 }} color="primary" />
+                    <ListItemText secondary={criteria} />
+                </ListItemButton>  
+              ))}</React.Fragment>}
             </div>)}
+
+
           </Card>
         </Grid>
       );

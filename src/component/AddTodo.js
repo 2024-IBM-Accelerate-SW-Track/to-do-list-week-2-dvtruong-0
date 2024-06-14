@@ -7,8 +7,8 @@ class AddTodo extends Component {
     super();
     this.state = {
       content: "",
-      conditions: "",
-      criteria: "",
+      conditions: [],
+      criteria: [],
       date: ""
     };
   }
@@ -23,18 +23,31 @@ class AddTodo extends Component {
     });
     }
     if (event.target.name == "conditions") {
-      this.setState({
-        conditions: event.target.value,
-        date: Date().toLocaleString('en-US')
-      })
+      if (event.target.value.includes(",")) {
+        this.setState({
+          conditions: event.target.value.split(","),
+          date: Date().toLocaleString('en-US')
+        })
+      } else {
+        this.setState({
+          conditions: [event.target.value],
+          date: Date().toLocaleString('en-US')
+        })
+      }
     }
     if (event.target.name == "criteria") {
-      this.setState({
-        criteria: event.target.value,
-        date: Date().toLocaleString('en-US')
-      })
+      if (event.target.value.includes(",")) {
+        this.setState({
+          criteria: event.target.value.split(","),
+          date: Date().toLocaleString('en-US')
+        })
+      } else {
+        this.setState({
+          criteria: [event.target.value],
+          date: Date().toLocaleString('en-US')
+        })
+      }
     }
-    
   };
   // The handleSubmit function collects the forms input and puts it into the react state.
   // event.preventDefault() is called to prevents default event behavior like refreshing the browser.
@@ -46,12 +59,13 @@ class AddTodo extends Component {
       this.props.addTodo(this.state);
       this.setState({
         content: "",
-        conditions: "",
-        criteria: "",
+        conditions: [],
+        criteria: [],
         date: ""
       });
     }
   };
+
   render() {
     return (
       // 1. When rendering a component, you can render as many elements as you like as long as it is wrapped inside
@@ -71,14 +85,14 @@ class AddTodo extends Component {
           name="content"
         />
         <TextField 
-          label="Pre-Conditions"
+          label="Pre-Conditions (comma separated)"
           variant="outlined"
           onChange={this.handleChange}
           value={this.state.conditions}
           name="conditions"
         />
         <TextField
-          label="Acceptance Criteria"
+          label="Acceptance Criteria (comma separated)"
           variant="outlined"
           onChange={this.handleChange}
           value={this.state.criteria}

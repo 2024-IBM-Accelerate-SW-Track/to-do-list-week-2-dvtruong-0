@@ -42,10 +42,12 @@ class Home extends Component {
       todos: todos,
     });
 };
+
+  
   render() {
     return (
       <div className="Home">
-        <h1>Todo's </h1>
+        <h1>Todo's</h1>
         {/* When passing the AddTodo component, addTodo is a prop that is used in the 
         AddTodo.js file when handling the submit */}
         <AddTodo addTodo={this.addTodo} />
