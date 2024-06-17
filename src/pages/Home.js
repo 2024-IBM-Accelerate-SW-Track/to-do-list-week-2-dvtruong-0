@@ -43,7 +43,19 @@ class Home extends Component {
     });
 };
 
-  
+  addCondition = (todo, condition, setConditionToAdd) => {
+    if (condition !== "" && !todo.conditions.includes(condition)) {
+      todo.conditions.push(condition);
+      setConditionToAdd("");
+    };
+  }
+
+  addCriteria = (todo, criteria, setCriteriaToAdd) => {
+    if (criteria !== "" && !todo.criteria.includes(criteria)) {
+      todo.criteria.push(criteria)
+      setCriteriaToAdd("");
+    }
+  }
   render() {
     return (
       <div className="Home">
@@ -53,7 +65,7 @@ class Home extends Component {
         <AddTodo addTodo={this.addTodo} />
         {/* When returning the Todos component, todos is a prop passed to the todos.js file
          to format and render the current todo list state */}
-        <Todos todos={this.state.todos} deleteTodo={this.deleteTodo}/>
+        <Todos todos={this.state.todos} deleteTodo={this.deleteTodo} addCondition={this.addCondition} addCriteria={this.addCriteria}/>
       </div>
     );
   }
