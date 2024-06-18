@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "../component/todos.css";
-import { Card, CardContent, Grid } from "@mui/material";
+import { Card, CardContent, Grid, ListItemButton, ListItemText, Checkbox, colors, TextField, Button } from "@mui/material";
 
 // 1. This component formats and returns the list of todos.
 // 2. Treat the question mark like an if statement.
@@ -9,17 +9,51 @@ import { Card, CardContent, Grid } from "@mui/material";
 // 3. The map function is called to assign each array item with a key
 // 4. Think of lines 14-23 as a loop. For each todo in the todo list, we want to give the list item
 // a key, and it's own card shown in the UI
-const Todos = ({ todos }) => {
+const Todos = ({ todos, deleteTodo, addCondition, addCriteria }) => {
+  const [conditionToAdd, setConditionToAdd] = useState("");
+  const [criteriaToAdd, setCriteriaToAdd] = useState("");
+
+  handleChange = (event) => {
+
+  }
   const todoList = todos.length ? (
     todos.map((todo) => {
       return (
         <Grid key={todo.id}>
-          <Card>
+          <Card style={{marginTop:10}}>
             {/* Remember, we set the local state of this todo item when the user submits the form in 
             AddTodo.js. All we need to do is return the todo list item {todo.content} */}
-            <CardContent>
-              <span style={{ padding: "50px" }}>{todo.content}</span>
-            </CardContent>
+            <ListItemButton component="a" href="#simple-list">
+              <Checkbox style={{padding:0}} color="primary" onClick={() => {deleteTodo(todo.id)}}></Checkbox>
+              <ListItemText  primary={todo.content} secondary={todo.date}/>
+            </ListItemButton>
+            {Array.isArray(todo.conditions) && todo.conditions.length > 0 && (
+            <div style={{ padding: '0 16px 16px 16px' }}>
+              {<React.Fragment>Pre-Conditions: {todo.conditions.map((condition, index) => (
+                  <ListItemButton href="#simple-list">
+                    <Checkbox style={{ padding: 0 }} color="primary" />
+                    <ListItemText secondary={condition} />
+                </ListItemButton>  
+              ))}
+              </React.Fragment>}
+            </div>)}
+            <div style={{ padding: '0 16px 16px 16px'}}>
+              <TextField
+                variant="outlined"
+                onChange={() => {setConditionToAdd()}}
+                value={conditionToAdd}
+                name="conditions"
+              />
+            </div>
+            {Array.isArray(todo.criteria) && todo.criteria.length > 0 && (
+            <div style={{ padding: '0 16px 16px 16px' }}>
+              {<React.Fragment>Acceptance Criteria: {todo.criteria.map((criteria, index) => (
+                  <ListItemButton href="#simple-list">
+                    <Checkbox style={{ padding: 0 }} color="primary" />
+                    <ListItemText secondary={criteria} />
+                </ListItemButton>  
+              ))}</React.Fragment>}
+            </div>)}
           </Card>
         </Grid>
       );
